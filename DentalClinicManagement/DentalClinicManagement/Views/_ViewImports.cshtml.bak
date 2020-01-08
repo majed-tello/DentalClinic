@@ -1,0 +1,6 @@
+@using Microsoft.AspNetCore.Identity
+@using DentalClinicManagement
+@using DentalClinicManagement.Models
+@using DentalClinicManagement.Models.AccountViewModels
+@using DentalClinicManagement.Models.ManageViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

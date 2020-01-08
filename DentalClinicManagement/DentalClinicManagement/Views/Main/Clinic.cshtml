@@ -1,0 +1,85 @@
+﻿
+@(Html.DevExtreme().DataGrid<Clinic>().ID("g1")
+                                .DataSource(ds => ds.Mvc()
+                                    .Controller("Clinics")
+                                    .LoadAction("Get")
+                                    .InsertAction("Post")
+                                    .UpdateAction("Put")
+                                    .DeleteAction("Delete")
+                                    .Key("Id")
+                                )
+                                .RemoteOperations(true)
+                                .Export(e => e.Enabled(true)
+
+                                .FileName("Clinics"))
+                                .FilterRow(r => r.Visible(true))
+                                .RowAlternationEnabled(true)
+                                .Paging(paging => paging.PageSize(35))
+                                .Pager(pager =>
+                                {
+                                    pager.ShowPageSizeSelector(true);
+                                    pager.AllowedPageSizes(new List<int> { 5, 10, 20 });
+                                    pager.ShowInfo(true);
+                                })
+                                .SearchPanel(searchPanel => searchPanel.Visible(true))
+                                .Summary(s => s.TotalItems(items =>
+                                {
+                                    items.AddFor(m => m.Name).SummaryType(SummaryType.Count);
+                                }))
+                                .Columns(columns =>
+                                {
+
+                                    columns.AddFor(m => m.Name);
+
+                                    columns.AddFor(m => m.Address);
+
+                                    columns.AddFor(m => m.Phone);
+
+
+                                })
+                                .Editing(e => e
+                                    .Mode(GridEditMode.Popup)
+                                    .AllowAdding(true)
+                                    .AllowUpdating(true)
+                                    .AllowDeleting(true)
+                                    .UseIcons(true)
+                                    .Popup(p => p
+                                    
+                                    .ShowTitle(true)
+                                     .Width("auto")
+                                        .Height("auto")
+                                    .Position(pos => pos
+                                    .My(HorizontalAlignment.Center, VerticalAlignment.Top)
+                                    .At(HorizontalAlignment.Center, VerticalAlignment.Top)
+                                .Of(new JS("window"))
+                                 )).Form(f => f.Items(items =>
+                                                       {
+                                                           items.AddGroup()
+                                                               .ColCount(2)
+                                                               .ColSpan(2)
+                                                               .Items(groupItems =>
+                                                               {
+                                                                   groupItems.AddSimpleFor(m => m.Name).ColSpan(2);
+                                                                   groupItems.AddSimpleFor(m => m.Address);
+                                                                   groupItems.AddSimpleFor(m => m.Phone).ColSpan(2);
+                                                               });
+
+
+                                                       })))
+                                 .OnRowInserted("addNotify")
+                                 .OnRowUpdated("updateNotify")
+                                 .OnRowRemoving("removeNotify")
+)
+<script>
+    function updateNotify(e) {
+        DevExpress.ui.notify("Update Done", "success", 1000);
+    }
+
+    function removeNotify(e) {
+        DevExpress.ui.notify("Delete Done", "error", 1000);
+    }
+
+    function addNotify(e) {
+        DevExpress.ui.notify("Insert Done", "success", 1000);
+    }
+</script>

@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="motion" style="width:650px;height:650px;">
+    <script>
+                var animation = lottie.loadAnimation({
+                    container: document.getElementById('motion'),
+                    renderer: 'svg',
+                    loop: false,
+                    autoplay: true,
+                    path: '../../Lottie/11051-botmd.json'
+                })
+
+
+                animation.addEventListener('complete', function () {
+                    setTimeout(function () {
+                        animation.goToAndPlay(0);
+                    }, 5000);
+                })
+    </script>
+</div>
